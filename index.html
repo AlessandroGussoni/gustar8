@@ -83,6 +83,23 @@
         .section.active {
             display: block;
         }
+        .responsive-image {
+            max-width: 100%;
+            height: auto;
+        }
+        #thought {
+            text-align: left;
+            background-color: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #9c27b0;
+        }
+        #thought ul {
+            padding-left: 20px;
+        }
+        #thought li {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +120,7 @@
                 <div class="note">
                     <div id="home-content">
                         <h2>Holy fuck github pages are so goated !!</h2>
-                        <img src="assets/netero_github_pages.png"></img>
+                        <img src="assets/netero_github_pages.png" class="responsive-image"></img>
                         <p>Free, 1 minute to deploy cd/ci already there tons of plugins what you need more? Not sure why all repos out there don't have one instead of the 16 century readme.md</p>
                     </div>
                 </div>
@@ -112,7 +129,19 @@
 
             <section id="thoughts" class="section">
                 <h2>Things that are floating into my brain right now</h2>
-                <div id="thoughts-content"></div>
+                <div id="thoughts-content">
+                    <div id="thought">
+                        <p>Thinking about NN trained to predict next move in GO. Most of them (like good and old AlphaGo) use Conv based architecture, pipeline is something like this: </p>
+                        <li>take a board state and the position of the next stone to be placed</li>
+                        <li>encode board state into a numerical representation of shape (B, C, 19, 19)</li>
+                        <li>train a model to learn a F(encoding) = next move to play</li>
+                        <p>Basically board states are encoded in the same data format of image, with each plane c mapping different informations about stones (# of liberties, ko, etc), in order to make 2D conv works. 
+                           But like why we do not encode states as graph? Each intersection would be a node and lines would be edges for an empty board. 
+                           Main idea is graph semantically capture more of the true nature of the Go game, (territories, stone connections etc) sio taht group of stones shares same connections, 
+                           then map feature planes to node features and you can train a simple GCN on that. Not sure if it makes sense need to think about it more 
+                        </p>
+                    </div>
+                </div>
             </section>
 
             <section id="blog" class="section">
