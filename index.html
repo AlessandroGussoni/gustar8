@@ -138,7 +138,7 @@
                         <p>Basically board states are encoded in the same data format of image, with each plane c mapping different informations about stones (# of liberties, ko, etc), in order to make 2D conv works. 
                            But like why we do not encode states as graph? Each intersection would be a node and lines would be edges for an empty board. 
                            Main idea is graph semantically capture more of the true nature of the Go game, (territories, stone connections etc) sio taht group of stones shares same connections, 
-                           then map feature planes to node features and you can train a simple GCN on that. Not sure if it makes sense need to think about it more 
+                           then map feature planes to node features and you can train a simple GCN on that. Not sure if it makes too much sense need to think about it more 
                         </p>
                     </div>
                 </div>
