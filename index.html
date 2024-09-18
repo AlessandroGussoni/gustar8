@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Stream of Consciousness</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        header {
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #4caf50;
+            font-size: 2.5em;
+            min-height: 1.2em;
+        }
+        h2 {
+            color: #9c27b0;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .note {
+            background-color: #2a2a2a;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4caf50;
+        }
+        a {
+            color: #03a9f4;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .blog-post {
+            background-color: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .blog-post:hover {
+            background-color: #3a3a3a;
+        }
+        .blog-post-title {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+        .blog-post-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .blog-post.expanded .blog-post-content {
+            max-height: 1000px; /* Adjust this value based on your content */
+        }
+        .cursor {
+            border-right: 0.1em solid #4caf50;
+            animation: blink 0.7s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #4caf50 }
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header>
+            <h1 id="title"></h1>
+            <h2>Your Title or Tagline</h2>
+            <nav>
+                <a href="#home">home</a> | 
+                <a href="#thoughts">thoughts</a> | 
+                <a href="#blog">blog</a> | 
+                <a href="#about">about</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="home" class="section">
+                <h2>The Blackboard</h2>
+                <div class="note">
+                    <p>.</p>
+                </div>
+                <div id="home-content"></div>
+            </section>
+
+            <section id="thoughts" class="section">
+                <h2>Things that are floating into my brain right now</h2>
+                <div id="thoughts-content"></div>
+            </section>
+
+            <section id="blog" class="section">
+                <h2>Blog</h2>
+                <div id="blog-content">
+                    <div class="blog-post">
+                        <h3 class="blog-post-title">Empty blog post to defeat my horror vacui, do not click it</h3>
+                        <div class="blog-post-content">
+                            <p>I told you not to click!!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="section">
+                <h2>What is this mess?</h2>
+                <p>
+                    This is my mental sandbox environment - a dedicated space for dumping my thoughts, ideas, and ongoing projects into a (more or less) versioned test stream.
+                    
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const title = "Gustar8";
+        const mistakes = [
+            { pos: 2, wrong: 'o', duration: 200 },
+            { pos: 5, wrong: 'o', duration: 100 },
+            { pos: 6, wrong: 't', duration: 150 },
+        ];
+        let titleEl = document.getElementById('title');
+        let curPos = 0;
+        let mistakeIndex = 0;
+
+        function typeTitle() {
+            if (curPos < title.length) {
+                if (mistakeIndex < mistakes.length && curPos === mistakes[mistakeIndex].pos) {
+                    titleEl.innerHTML = title.slice(0, curPos) + mistakes[mistakeIndex].wrong + '<span class="cursor"></span>';
+                    setTimeout(() => {
+                        titleEl.innerHTML = title.slice(0, curPos) + '<span class="cursor"></span>';
+                        setTimeout(typeTitle, 100);
+                    }, mistakes[mistakeIndex].duration);
+                    mistakeIndex++;
+                } else {
+                    titleEl.innerHTML = title.slice(0, curPos + 1) + '<span class="cursor"></span>';
+                    curPos++;
+                    setTimeout(typeTitle, Math.random() * 100 + 50);
+                }
+            } else {
+                titleEl.innerHTML = title + '<span class="cursor"></span>';
+            }
+        }
+
+        typeTitle();
+
+        // Section visibility
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection(e.target.getAttribute('href').slice(1));
+            });
+        });
+
+        // Show home section by default
+        showSection('home');
+
+        // Blog post expansion
+        document.querySelectorAll('.blog-post').forEach(post => {
+            post.addEventListener('click', () => {
+                post.classList.toggle('expanded');
+            });
+        });
+    </script>
+</body>
+</html>
